@@ -1,5 +1,6 @@
 import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
+import 'dart:typed_data';
 
 import 'app_bar.dart';
 // import 'custom_ui.dart';
@@ -15,6 +16,7 @@ class VideoScreen extends StatefulWidget {
 
 class _VideoScreenState extends State<VideoScreen> {
   final FijkPlayer player = FijkPlayer();
+  var _snapshot = null;
 
   _VideoScreenState();
 
@@ -39,21 +41,40 @@ class _VideoScreenState extends State<VideoScreen> {
     return Scaffold(
       appBar: FijkAppBar.defaultSetting(title: "Video"),
       body: Container(
-        child: Center(
-          child: FijkView(
-            player: player,
-            panelBuilder: fijkPanel2Builder(snapShot: true),
-            fsFit: FijkFit.fill,
-            // panelBuilder: simplestUI,
-            // panelBuilder: (FijkPlayer player, BuildContext context,
-            //     Size viewSize, Rect texturePos) {
-            //   return CustomFijkPanel(
-            //       player: player,
-            //       buildContext: context,
-            //       viewSize: viewSize,
-            //       texturePos: texturePos);
-            // },
-          ),
+        child: Column(
+          children: [
+            Container(
+              height: 300,
+              child: FijkView(
+                player: player,
+                panelBuilder: fijkPanel2Builder(snapShot: true),
+                fsFit: FijkFit.fill,
+                // panelBuilder: simplestUI,
+                // panelBuilder: (FijkPlayer player, BuildContext context,
+                //     Size viewSize, Rect texturePos) {
+                //   return CustomFijkPanel(
+                //       player: player,
+                //       buildContext: context,
+                //       viewSize: viewSize,
+                //       texturePos: texturePos);
+                // },
+              ),
+            ),
+
+            /// 截屏
+            MaterialButton(
+              onPressed: () async {
+                Uint8List list = await player.takeSnapShot();
+                _snapshot = list;
+                setState(() {});
+              },
+              color: Colors.lightBlue,
+              child: Text('截屏'),
+            ),
+
+            /// 显示截屏
+           _snapshot == null ? Text('无图') : Image.memory(_snapshot),
+          ],
         ),
       ),
     );

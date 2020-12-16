@@ -5,6 +5,9 @@ import 'app_bar.dart';
 import 'media_item.dart';
 
 const List<MediaUrl> samples = [
+  MediaUrl(title: '实验室rtsp', url: 'rtsp://192.168.8.120:15362/live/20'),
+  MediaUrl(title: '外网rtsp', url: 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_175k.mov'),
+  MediaUrl(title: '外网http mp4', url: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4'),
   MediaUrl(
       title: "Aliyun", url: "http://player.alicdn.com/video/aliyunmedia.mp4"),
   MediaUrl(
